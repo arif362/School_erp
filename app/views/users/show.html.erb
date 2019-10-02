@@ -1,0 +1,12 @@
+<%  if current_user.id == @user.id %>
+  <%= render 'shared/dashboard_info' %>
+
+<% else %>
+  <div class=" border p-3 mt-2 ">
+
+        <h3 class="border-bottom"> User Info</h3>
+        <p><b> User Name: </b><%= @user.name %></p>
+        <p><b> User Email: </b><%= @user.email %></p>
+
+  </div>
+<% end %>

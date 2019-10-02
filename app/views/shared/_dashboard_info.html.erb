@@ -1,0 +1,32 @@
+
+<div class="pt-5 border-bottom pb-5 ">
+  <h4 class="float-left "> <span class="fa fa-list"></span> <%= current_user.user_type.humanize %> : <%= current_user.name.humanize %> </h4>
+
+  <% if current_user.user_type=='Admin' %>
+    <%= link_to 'Edit School', edit_school_path(current_school.id), class:'ml-1 float-right btn btn-primary btn-sm'%>
+  <% end %>
+
+  <%= link_to 'Edit Profile', edit_user_path(current_user.id, user_type: current_user.user_type), class:'float-right btn btn-primary btn-sm'%>
+
+</div>
+
+<div class=" border p-3 mt-2 ">
+
+    <div class="row">
+      <div class="col-lg-6 col-sm-12 border-right">
+        <h3 class="border-bottom">School info</h3>
+        <p><b> School Name: </b><%= current_school.name %></p>
+        <p><b> School Email: </b><%= current_school.email %></p>
+        <p><b> School Address: </b><%= current_school.address %></p>
+        <p><b> School  Contact: </b><%= current_school.contact %></p>
+      </div>
+
+      <div class="col-lg-6 col-sm-12">
+        <h3 class="border-bottom"> User Info</h3>
+        <p><b> User Name: </b><%= current_user.name %></p>
+        <p><b> User Email: </b><%= current_user.email %></p>
+
+      </div>
+  </div>
+
+</div>

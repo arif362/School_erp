@@ -1,0 +1,106 @@
+<header class="navbar navbar-expand-lg navbar-dark bg-primary">
+<!--  <a class="navbar-brand" href="#">Navbar</a>-->
+  <%= link_to root_path,  class: "navbar-brand "  do %>
+  <% if user_signed_in? %>
+      <%= current_school.name  if current_school.present? %>
+    <% else %>
+     SMR
+    <% end %>
+      <% end %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <% if current_user.nil? %>
+    <div class="collapse navbar-collapse justify-content-end">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <%= link_to "Home", root_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+           <%= link_to "Sign In", new_user_session_path, class: "btn btn-success" %>
+        </li>
+      </ul>
+    </div>
+  <% elsif current_user.user_type=="Admin" %>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+<!--        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>-->
+        <%= link_to "Home", dashboard_home_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Teachers", users_path(user_type: 'Teacher'), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Students", users_path(user_type: 'Student'), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "All Departments", departments_path, class: "nav-link" %>
+      </li>
+      <% if current_school.present? %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= current_department.name %>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <% current_user_departments.each do |dept| %>
+            <%= link_to dept.name, switch_department_path(dept.id), class: "dropdown-item" %>
+          <% end %>
+        </div>
+      </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%= current_user.name %>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <%= link_to "Profile", user_path(current_user.id), class: "dropdown-item" %>
+            <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% elsif current_user.user_type=="Student" %>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <!--        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>-->
+          <%= link_to "Home", dashboard_home_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Teachers", teachers_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Students", students_path, class: "nav-link" %>
+        </li>
+
+        <li class="nav-item active">
+          <%= link_to current_user.department.name, "#", class: "nav-link" %>
+        </li>
+        <li class="nav-item"><%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %></li>
+      </ul>
+    </div>
+
+  <% elsif current_user.user_type=="Teacher" %>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <!--        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>-->
+          <%= link_to "Home", dashboard_home_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Teachers", teachers_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Students", students_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to current_user.department.name, "#", class: "nav-link" %>
+        </li>
+        <li class="nav-item"><%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %></li>
+      </ul>
+    </div>
+    <% end %>
+</header>
