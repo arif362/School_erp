@@ -6,6 +6,20 @@ class UsersController < ApplicationController
     @users = current_department.users.get_users(params[:user_type])
   end
 
+  def new
+    respond_to do |format|
+      @user = User.new
+      format.js
+    end
+  end
+
+  def add
+    respond_to do |format|
+      @user = User.create(user_params)
+      format.js
+    end
+  end
+
   def destroy
     deleted=@user.destroy
     redirect_to users_path(user_type: deleted.user_type), alert: "#{deleted.user_type} : #{deleted.name} has been deleted!"

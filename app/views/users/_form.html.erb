@@ -1,4 +1,4 @@
-<h4> <%= @user.new_record? ? 'create' : 'edit' %> </h4>
+<h4> <%= @user.new_record? ? 'Create' : 'Edit' %> </h4>
 <%= form_with model: @user do |f| %>
   <div class="form-group">
     <%= f.text_field :name, placeholder: "Name", class: "form-control" %>

@@ -28,6 +28,9 @@ Rails.application.routes.draw do
   end
 
   resources :users do
+    collection do
+      post :add
+    end
     member do
       get :invite
     end
